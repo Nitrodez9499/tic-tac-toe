@@ -1,37 +1,42 @@
 <!DOCTYPE html>
-<html>    
-<head>
-<title>Tic-Tac-Toe</title>
-<SCRIPT TYPE="TEXT/JAVASCRIPT">
-    var xTurn = true;
-    var gameOver = false
-    var numMoves = 0
-    function squareclicked(square)
-    // squareclicked is a function that is called whenever a button is clicked.
-    {
+<html>
 
-    }
-    </SCRIPT>
-    
-<link type="text/css" rel="stylesheet"
-href="css/tic-tac-toe-stylesheet.css"/>
+<head>
+    <title>Tic-Tac-Toe</title>
+    <script TYPE="text/javascript">
+
+        var xTurn = true;
+
+        var gameOver = false;
+
+        var numMoves = 0;
+
+        // squareclicked is a function that is called whenever a button is clicked.
+        function squareclicked(square) {
+            square.textContent = "X";
+        }
+    </script>
+
+    <link type="text/css" rel="stylesheet" href="css/tic-tac-toe-stylesheet.css" />
 </head>
+
 <body>
-<h1>How to play</h1>
-<p>Try to be the first one to make a line horizontaly, vertically, or diagonally. Good luck!</p>
-    <INPUT TYPE="BUTTON" ID="0_0" VALUE="   "  ONCLICK="squareclicked(this);">
-    <INPUT TYPE="BUTTON" ID="1_0" VALUE="   "  ONCLICK="squareclicked(this);">
-    <INPUT TYPE="BUTTON" ID="2_0" VALUE="   "  ONCLICK="squareclicked(this);">
-    <BR>
-    <INPUT TYPE="BUTTON" ID="0_1" VALUE="   "  ONCLICK="squareclicked(this);">
-    <INPUT TYPE="BUTTON" ID="1_1" VALUE="   "  ONCLICK="squareclicked(this);">
-    <INPUT TYPE="BUTTON" ID="2_1" VALUE="   "  ONCLICK="squareclicked(this);">
-    <BR>
-    <INPUT TYPE="BUTTON" ID="0_2" VALUE="   "  ONCLICK="squareclicked(this);">
-    <INPUT TYPE="BUTTON" ID="1_2" VALUE="   "  ONCLICK="squareclicked(this);">
-    <INPUT TYPE="BUTTON" ID="2_2" VALUE="   "  ONCLICK="squareclicked(this);">
-    <BR>
-        <P ID="status">X's turn</P>
-        <INPUT TYPE="BUTTON" ID="NEWGAME" VALUE="New Game" ONCLICK="newgame();">
+    <h1>How to play</h1>
+    <p>Try to be the first one to make a line horizontaly, vertically, or diagonally. Good luck!</p>
+    <button id="0_0" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <button id="1_0" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <button id="2_0" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <br>
+    <button id="0_1" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <button id="1_1" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <button id="2_1" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <br>
+    <button id="0_2" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <button id="1_2" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <button id="2_2" class="boardButton" onclick="squareclicked(this);">&nbsp;</button>
+    <br>
+    <p id="status">x's turn</p>
+    <button>New Game</button>
 </body>
+
 </html>
