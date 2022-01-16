@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>    
+<head>
+<title>Tic-Tac-Toe</title>
+<SCRIPT TYPE="TEXT/JAVASCRIPT">
+    var xTurn = true;
+    var gameOver = false
+    var numMoves = 0
+    function squareclicked(square)
+    // squareclicked is a function that is called whenever a button is clicked.
+    {
+
+    }
+    </SCRIPT>
+    
+<link type="text/css" rel="stylesheet"
+href="css/tic-tac-toe-stylesheet.css"/>
+</head>
+<body>
+<h1>How to play</h1>
+<p>Try to be the first one to make a line horizontaly, vertically, or diagonally. Good luck!</p>
+    <INPUT TYPE="BUTTON" ID="0_0" VALUE="   "  ONCLICK="squareclicked(this);">
+    <INPUT TYPE="BUTTON" ID="1_0" VALUE="   "  ONCLICK="squareclicked(this);">
+    <INPUT TYPE="BUTTON" ID="2_0" VALUE="   "  ONCLICK="squareclicked(this);">
+    <BR>
+    <INPUT TYPE="BUTTON" ID="0_1" VALUE="   "  ONCLICK="squareclicked(this);">
+    <INPUT TYPE="BUTTON" ID="1_1" VALUE="   "  ONCLICK="squareclicked(this);">
+    <INPUT TYPE="BUTTON" ID="2_1" VALUE="   "  ONCLICK="squareclicked(this);">
+    <BR>
+    <INPUT TYPE="BUTTON" ID="0_2" VALUE="   "  ONCLICK="squareclicked(this);">
+    <INPUT TYPE="BUTTON" ID="1_2" VALUE="   "  ONCLICK="squareclicked(this);">
+    <INPUT TYPE="BUTTON" ID="2_2" VALUE="   "  ONCLICK="squareclicked(this);">
+    <BR>
+        <P ID="status">X's turn</P>
+        <INPUT TYPE="BUTTON" ID="NEWGAME" VALUE="New Game" ONCLICK="newgame();">
+</body>
+</html>
