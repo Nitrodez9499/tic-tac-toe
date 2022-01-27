@@ -1,134 +1,293 @@
-// squareclicked is a function that is called whenever a button is clicked.
-let xTurn = true;
+$(document).ready(function() {
+    $(".dots").click(function() {
+        $(".options, p").css("visibility", "hidden");
+        $("td").css("visibility", "visible");
+        aiCo = "#333";
+        huCo = "white";
+        console.log("white");
+    });
+    $(".dots2").click(function() {
+        $(".options, p").css("visibility", "hidden");
+        $("td").css("visibility", "visible");
+        console.log("black");
+    });
 
-function squareclicked(square) {
+    $("td").click(function() {
+        move(this, huPlayer, huCo);
+        console.log("clicked");
+    });
+});
 
-    let gameOver = false;
+var board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+var huPlayer = "P";
+var aiPlayer = "C";
+var iter = 0;
+var round = 0;
+var aiCo = "white";
+var huCo = "#333";
 
-    let numMoves = 0;
+function move(element, player, color) {
+    console.log("element" + element.id);
+    if (board[element.id] != "P" && board[element.id] != "C") {
+        round++;
+        $(element).css("background-color", color);
+        board[element.id] = player;
+        console.log(board);
 
-    let status = document.getElementById('status');
-    let value = square.value;
-    if (value != 'X' && value != 'O') {
-        if (xTurn == true) {
-            numMoves++;
-            square.value = 'X';
-            square.textContent = 'X';
-            xTurn = false;
-            status.innerHTML = 'O\'s turn';
-            checkWin();
-        } else if (xTurn == false) {
-            numMoves++;
-            square.value = 'O';
-            square.textContent = 'O';
-            xTurn = true;
-            status.innerHTML = 'X\'s turn';
-            checkWin();
-        }
-    }
-
-    function checkWin() {
-        let status = document.getElementById('status');
-        let val0;
-        let val1;
-        let val2;
-
-        // check columns
-        for (let y = 0; y < 3; y++) {
-            
-            // set y to 0; check if y is less than y (0); then add 1 to y.
-            
-            // y_0
-            val0 = document.getElementById(y + '_0').value;
-            
-            // y_1
-            val1 = document.getElementById(y + '_1').value;
-            
-            // y_2
-            val2 = document.getElementById(y + '_2').value;
-            
-
-            if (val0 == 'X' && val1 == 'X' && val2 == 'X') {
-                
-                status.innerHTML = "X WINS!";
-
-                return true;
-
-            } else if (val0 == 'O' && val1 == 'O' && val2 == 'O') {
-                
-                status.innerHTML = "O WINS!";
-
-                return true;
-            }
-        }
-
-        // check rows
-        for (let x = 0; x < 3; x++) {
-            val0 = document.getElementById('0_' + x).value;
-            val1 = document.getElementById('1_' + x).value;
-            val2 = document.getElementById('2_' + x).value;
-            if (val0 == 'X' && val1 == 'X' && val2 == 'X') {
-                status.innerHTML = "X WINS!";
-                return true;
-            } else if (val0 == 'O' && val1 == 'O' && val2 == 'O') {
-                status.innerHTML = "O WINS!";
-                return true;
-            }
-        }
-
-        // check top left to lower right diagonal
-        val0 = document.getElementById('0_0').value;
-        val1 = document.getElementById('1_1').value;
-        val2 = document.getElementById('2_2').value;
-        if (val0 == 'X' && val1 == 'X' && val2 == 'X') {
-            status.innerHTML = "X WINS!";
-            return true;
-        } else if (val0 == 'O' && val1 == 'O' && val2 == 'O') {
-            status.innerHTML = "O WINS!";
-            return true;
-        }
-
-        // check lower left to top right diagonal
-        val0 = document.getElementById('2_0').value;
-        val1 = document.getElementById('1_1').value;
-        val2 = document.getElementById('0_2').value;
-        if (val0 == 'X' && val1 == 'X' && val2 == 'X') {
-            status.innerHTML = "X WINS!";
-            return true;
-        } else if (val0 == 'O' && val1 == 'O' && val2 == 'O') {
-            status.innerHTML = "O WINS!";
-            return true;
-        }
-
-        // no winner yet  return false;
-
-        if (gameOver) {
-            alert("The game is already over.");
+        if (winning(board, player)) {
+            setTimeout(function() {
+                alert("YOU WIN");
+                reset();
+            }, 500);
             return;
+        } else if (round > 8) {
+            setTimeout(function() {
+                alert("TIE");
+                reset();
+            }, 500);
+            return;
+        } else {
+            round++;
+            var index = minimax(board, aiPlayer).index;
+            var selector = "#" + index;
+            $(selector).css("background-color", aiCo);
+            board[index] = aiPlayer;
+            console.log(board);
+            console.log(index);
+            if (winning(board, aiPlayer)) {
+                setTimeout(function() {
+                    alert("YOU LOSE");
+                    reset();
+                }, 500);
+                return;
+            } else if (round === 0) {
+                setTimeout(function() {
+                    alert("tie");
+                    reset();
+                }, 500);
+                return;
+            }
         }
     }
 }
 
+function reset() {
+    round = 0;
+    board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    $("td").css("background-color", "transparent");
+}
 
-function newgame()
-{
-   var status = document.getElementById('status');
+function minimax(reboard, player) {
+    iter++;
+    let array = avail(reboard);
+    if (winning(reboard, huPlayer)) {
+        return {
+            score: -10
+        };
+    } else if (winning(reboard, aiPlayer)) {
+        return {
+            score: 10
+        };
+    } else if (array.length === 0) {
+        return {
+            score: 0
+        };
+    }
 
-   xTurn = true;
-   status.innerHTML = 'X\'s turn';
+    var moves = [];
+    for (var i = 0; i < array.length; i++) {
+        var move = {};
+        move.index = reboard[array[i]];
+        reboard[array[i]] = player;
 
-   for(let x = 0; x < 3; x++)
-   {
-      for(let y = 0; y < 3; y++)
-      {
-         const id = x + '_' + y;
+        if (player == aiPlayer) {
+            var g = minimax(reboard, huPlayer);
+            move.score = g.score;
+        } else {
+            var g = minimax(reboard, aiPlayer);
+            move.score = g.score;
+        }
+        reboard[array[i]] = move.index;
+        moves.push(move);
+    }
 
-         const element = document.getElementById(id);
+    var bestMove;
+    if (player === aiPlayer) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    return moves[bestMove];
+}
 
-         element.value = '';
-         element.textContent = '\xa0';
+//available spots
+function avail(reboard) {
+    return reboard.filter(s=>s != "P" && s != "C");
+}
 
-         console.log(element);
-      }
-   }
+// winning combinations
+function winning(board, player) {
+    if ((board[0] == player && board[1] == player && board[2] == player) || (board[3] == player && board[4] == player && board[5] == player) || (board[6] == player && board[7] == player && board[8] == player) || (board[0] == player && board[3] == player && board[6] == player) || (board[1] == player && board[4] == player && board[7] == player) || (board[2] == player && board[5] == player && board[8] == player) || (board[0] == player && board[4] == player && board[8] == player) || (board[2] == player && board[4] == player && board[6] == player)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+$(document).ready(function() {
+    $(".dots").click(function() {
+        $(".options, p").css("visibility", "hidden");
+        $("td").css("visibility", "visible");
+        aiCo = "#333";
+        huCo = "white";
+        console.log("white");
+    });
+    $(".dots2").click(function() {
+        $(".options, p").css("visibility", "hidden");
+        $("td").css("visibility", "visible");
+        console.log("black");
+    });
+
+    $("td").click(function() {
+        move(this, huPlayer, huCo);
+        console.log("clicked");
+    });
+});
+var board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+var huPlayer = "P";
+var aiPlayer = "C";
+var iter = 0;
+var round = 0;
+var aiCo = "white";
+var huCo = "#333";
+
+function move(element, player, color) {
+    console.log("element" + element.id);
+    if (board[element.id] != "P" && board[element.id] != "C") {
+        round++;
+        $(element).css("background-color", color);
+        board[element.id] = player;
+        console.log(board);
+
+        if (winning(board, player)) {
+            setTimeout(function() {
+                alert("YOU WIN");
+                reset();
+            }, 500);
+            return;
+        } else if (round > 8) {
+            setTimeout(function() {
+                alert("TIE");
+                reset();
+            }, 500);
+            return;
+        } else {
+            round++;
+            var index = minimax(board, aiPlayer).index;
+            var selector = "#" + index;
+            $(selector).css("background-color", aiCo);
+            board[index] = aiPlayer;
+            console.log(board);
+            console.log(index);
+            if (winning(board, aiPlayer)) {
+                setTimeout(function() {
+                    alert("YOU LOSE");
+                    reset();
+                }, 500);
+                return;
+            } else if (round === 0) {
+                setTimeout(function() {
+                    alert("tie");
+                    reset();
+                }, 500);
+                return;
+            }
+        }
+    }
+}
+
+function reset() {
+    round = 0;
+    board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    $("td").css("background-color", "transparent");
+}
+
+function minimax(reboard, player) {
+    iter++;
+    let array = avail(reboard);
+    if (winning(reboard, huPlayer)) {
+        return {
+            score: -10
+        };
+    } else if (winning(reboard, aiPlayer)) {
+        return {
+            score: 10
+        };
+    } else if (array.length === 0) {
+        return {
+            score: 0
+        };
+    }
+
+    var moves = [];
+    for (var i = 0; i < array.length; i++) {
+        var move = {};
+        move.index = reboard[array[i]];
+        reboard[array[i]] = player;
+
+        if (player == aiPlayer) {
+            var g = minimax(reboard, huPlayer);
+            move.score = g.score;
+        } else {
+            var g = minimax(reboard, aiPlayer);
+            move.score = g.score;
+        }
+        reboard[array[i]] = move.index;
+        moves.push(move);
+    }
+
+    var bestMove;
+    if (player === aiPlayer) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    return moves[bestMove];
+}
+
+//available spots
+function avail(reboard) {
+    return reboard.filter(s=>s != "P" && s != "C");
+}
+
+// winning combinations
+function winning(board, player) {
+    if ((board[0] == player && board[1] == player && board[2] == player) || (board[3] == player && board[4] == player && board[5] == player) || (board[6] == player && board[7] == player && board[8] == player) || (board[0] == player && board[3] == player && board[6] == player) || (board[1] == player && board[4] == player && board[7] == player) || (board[2] == player && board[5] == player && board[8] == player) || (board[0] == player && board[4] == player && board[8] == player) || (board[2] == player && board[4] == player && board[6] == player)) {
+        return true;
+    } else {
+        return false;
+    }
 }

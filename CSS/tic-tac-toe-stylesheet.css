@@ -1,24 +1,49 @@
-body {
-    background-color: thistle;
-    border: 2px solid Gray;
-    border-radius: 16px;
-    font-family: sans-serif;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1024px;
-    min-width: 256px;
-    padding-top: 8px;
-    padding-bottom: 24px;
-    padding-left: 24px;
-    padding-right: 24px;
+p {
+  top:10%;
+  font-size: 500%;
+  background:transparent;
 }
-html {
-    background: radial-gradient(circle, SkyBlue, SkyBlue 50%, LightCyan 50%, SkyBlue);
-    background-size: 8px 8px;
+.dots{
+display:inline-block;
+  background:white;
+  height:80px;
+  width:80px;
+  float: left;
+  border: 10px solid #333;
+}
+.dots2{
+  display:inline-block;
+  background:#333;
+  height:80px;
+  width:80px;
+  float: right;
 }
 
-.boardButton {
-    font-size: 4rem;
-    height: 100px;
-    width: 100px;
+.options{
+  height:100px;
+  width: 220px;
+  z-index:2;
+}
+
+td {
+border: 10px solid #333;
+height: 60px;
+width: 60px;
+visibility: hidden;
+}
+
+table{
+  position:absolute;
+  left:50%;
+  margin-left:-90px;
+  top:10%;
+  z-index:1;
+}
+.main{
+  width:100vw;
+  height:100vh;
+  background:linear-gradient(#f7aeb7, #ffcccc, #ffeee6);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
