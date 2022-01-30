@@ -11,7 +11,7 @@ var aiPlayer = "O";
 var iter = 0;
 var round = 0;
 var aiCo = "white";
-var huCo = "#333";
+var huCo = "#FF0000";
 
 function move(element, player, color) {
     console.log("element" + element.id);

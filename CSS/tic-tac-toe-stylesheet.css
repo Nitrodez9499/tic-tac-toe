@@ -1,9 +1,24 @@
 td {
-    border: 10px solid #333;
+    border: 7px solid #3adc3a;
     height: 60px;
     width: 60px;
+    color: red;
+    text-align: center;
+    font-size: xxx-large;
+    font-family: sans-serif;
+}
+.no-border {
+    border: none;
+}
+.no-horiz-border {
+    border-top: none;
+    border-bottom: none;
 }
 
+.no-vert-border {
+    border-left: none;
+    border-right: none;
+}
 table {
     position: absolute;
     left: 50%;
@@ -15,8 +30,10 @@ table {
 .main {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(#f7aeb7, #ffcccc, #ffeee6);
-    display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+body {
+    background-color:black;
 }
