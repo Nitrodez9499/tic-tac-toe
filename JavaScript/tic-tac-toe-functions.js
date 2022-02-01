@@ -12,26 +12,36 @@ var iter = 0;
 var round = 0;
 var aiCo = "white";
 var huCo = "#FF0000";
+let gameOver = false;
 
 function move(element, player, color) {
-    console.log("element" + element.id);
+
+    let leftOverMoves = [];
+
+    for (let i = 0; i < board.length; i++) {
+        if (isNaN(board[i])) {
+            continue;
+        }
+
+        leftOverMoves.push(board[i])
+    }
+
+    if (gameOver || leftOverMoves.length < 1) {
+        return;
+    }
+
     if (board[element.id] != "X" && board[element.id] != "O") {
         round++;
         $(element).text(player)
         board[element.id] = player;
-        console.log(board);
 
         if (winning(board, player)) {
-            setTimeout(function() {
-                alert("YOU WIN");
-                reset();
-            }, 500);
+            $(".status").text('YOU WIN');
+            gameOver = true;
             return;
         } else if (round > 8) {
-            setTimeout(function() {
-                alert("TIE");
-                reset();
-            }, 500);
+            $(".status").text('TIE');
+            gameOver = true;
             return;
         } else {
             round++;
@@ -42,16 +52,12 @@ function move(element, player, color) {
             console.log(board);
             console.log(index);
             if (winning(board, aiPlayer)) {
-                setTimeout(function() {
-                    alert("YOU LOSE");
-                    reset();
-                }, 500);
+                $(".status").text('YOU LOSE');
+                gameOver = true;
                 return;
             } else if (round === 0) {
-                setTimeout(function() {
-                    alert("tie");
-                    reset();
-                }, 500);
+                $(".status").text('TIE');
+                gameOver = true;
                 return;
             }
         }
@@ -61,7 +67,8 @@ function move(element, player, color) {
 function reset() {
     round = 0;
     board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    $("td").css("background-color", "transparent");
+    $("td").text('');
+    $(".status").text("X's turn");
 }
 
 function minimax(reboard, player) {

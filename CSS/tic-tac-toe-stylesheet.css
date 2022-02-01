@@ -33,7 +33,7 @@ table {
 .main {
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 20vw;
     height: 50vh;
     margin: 10vh auto;
 }
@@ -50,4 +50,11 @@ button {
 
 button:hover {
     background-color: #176017;
+}
+
+.status {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: x-large;
+    color: #007700;
 }
