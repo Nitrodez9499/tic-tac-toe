@@ -69,6 +69,7 @@ function reset() {
     board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     $("td").text('');
     $(".status").text("X's turn");
+    gameOver = false;
 }
 
 function minimax(reboard, player) {
